@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import RedirectResponse
 
+from app.dependencies import get_shortener_service
 from app.schemas.link import ShortenRequest, ShortenResponse
 from app.services.shortener import ShortenerService
-from app.dependencies import get_shortener_service
-
 
 router = APIRouter()
 
@@ -22,4 +22,4 @@ def redirect(code: str, service: ShortenerService = Depends(get_shortener_servic
     url = service.resolve(code)
     if not url:
         raise HTTPException(status_code=404, detail="Not found")
-    return {"redirect_to": url}
+    return RedirectResponse(url=url)

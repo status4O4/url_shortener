@@ -1,16 +1,11 @@
 from functools import lru_cache
 
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     app_name: str = "URL Shortener"
-    environment: str = Field(default="dev", examples=["dev", "prod", "test"])
     debug: bool = True
-
-    host: str = "127.0.0.1"
-    port: int = 8000
 
     database_path: str = "db.sqlite3"
 
